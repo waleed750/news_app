@@ -40,79 +40,70 @@ class NewsCubit extends Cubit<NewsStates>{
   {
 
       emit(NewsBusinessLoadingState());
-      await DioHelper.getData(url:
+      var articles = await DioHelper.getData(url:
           'v2/top-headlines' ,
           queryParameters: {
               'country':'eg' ,
               'category' :'business',
               'apiKey' :'4f2185f3d27e42749600b84d556061d5',
           }
-      ).then((value) {
-/*
-        print('Data from API : ${value.data.toString()}');
-*/
-        business = value.data['articles'];
-        print('Business data ${business}');
-        emit(NewsBusinessSuccessfulState());
-      }).catchError((error) {
+      ).catchError((error) {
         emit(NewsBusinessErrorState());
         print('Error from API : ${error.toString()}');
 
 
       });
 
+      business = articles.data['articles'];
+      print('Business data ${business}');
+      emit(NewsBusinessSuccessfulState());
   }
 
   List<dynamic> sports = [] ;
   Future<void> getSports() async
   {
     emit(NewsSportsLoadingState());
-    await DioHelper.getData(url:
+    var articles = await DioHelper.getData(url:
     'v2/top-headlines' ,
         queryParameters: {
           'country':'eg' ,
           'category' :'sports',
           'apiKey' :'4f2185f3d27e42749600b84d556061d5',
         }
-    ).then((value) {
-/*
-        print('Data from API : ${value.data.toString()}');
-*/
-      sports = value.data['articles'];
-      print('Business data ${sports}');
-      emit(NewsSportsSuccessfulState());
-    }).catchError((error) {
+    ).catchError((error) {
       emit(NewsSportsErrorState());
       print('Error from API : ${error.toString()}');
 
 
     });
 
+    sports = articles.data['articles'];
+    print('Business data ${sports}');
+    emit(NewsSportsSuccessfulState());
+
   }
   List<dynamic> science = [] ;
   Future<void> getScience() async
   {
     emit(NewsScienceLoadingState());
-    await DioHelper.getData(url:
+    var articles = await DioHelper.getData(url:
     'v2/top-headlines' ,
         queryParameters: {
           'country':'eg' ,
           'category' :'science',
           'apiKey' :'4f2185f3d27e42749600b84d556061d5',
         }
-    ).then((value) {
-/*
-        print('Data from API : ${value.data.toString()}');
-*/
-      science = value.data['articles'];
-      print('Business data ${science}');
-      emit(NewsScienceSuccessfulState());
-    }).catchError((error) {
+    ).catchError((error) {
       emit(NewsScienceErrorState());
       print('Error from API : ${error.toString()}');
 
 
     });
+
+
+    science = articles.data['articles'];
+    print('Business data ${science}');
+    emit(NewsScienceSuccessfulState());
 
   }
   void changeTheme()
